@@ -2,8 +2,8 @@ package models
 
 type SynthesizeInputModel struct {
 	// CustomPronunciations string
-	Text string `json:"text"`
-	// SSML                 string
+	Text string `json:"text,omitempty"`
+	SSML string `json:"ssml,omitempty"`
 	// NuktiSpeakerMarkup   string
 }
 type VoiceSelectionParamsModel struct {
@@ -20,11 +20,18 @@ type AudioConfigModel struct {
 	Pitch            float32  `json:"pitch"`
 	VolumeGainDb     float32  `json:"volumeGainDb"`
 	EffectsProfileId []string `json:"effectsProfileId"`
+	SampleRateHertz  int32    `json:"smapleRateHertz,omitempty"`
+}
+
+type AdvanceConfModel struct {
+	LowLatencyJourneySynthesis bool `json:"lowLatencyJourneySynthesis"`
 }
 
 type TextBaseModel struct {
-	Input       SynthesizeInputModel      `json:"input"`
-	Voice       VoiceSelectionParamsModel `json:"voice"`
-	AudioConfig AudioConfigModel          `json:"audioConfig"`
+	Input                      SynthesizeInputModel      `json:"input"`
+	Voice                      VoiceSelectionParamsModel `json:"voice"`
+	AudioConfig                AudioConfigModel          `json:"audioConfig"`
+	LowLatencyJourneySynthesis AdvanceConfModel          `json:"advancedVoiceOptions,omitempty"`
+
 	// AdvancedVoiceOptions string
 }

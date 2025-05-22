@@ -1,0 +1,10 @@
+{"audio_profile":[
+    "headphone-class-device",
+    "wearable-class-device",
+    "handset-class-device",
+    "small-bluetooth-speaker-class-device",
+    "medium-bluetooth-speaker-class-device",
+    "large-home-entertainment-class-device",
+    "large-automotive-class-device",
+    "telephony-class-application"
+]}
