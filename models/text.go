@@ -15,12 +15,12 @@ type VoiceSelectionParamsModel struct {
 }
 
 type AudioConfigModel struct {
-	AudioEncoding    string   `json:"audioEncoding"`
-	SpeakingRate     float32  `json:"speakingRate"`
-	Pitch            float32  `json:"pitch"`
-	VolumeGainDb     float32  `json:"volumeGainDb"`
-	EffectsProfileId []string `json:"effectsProfileId"`
-	SampleRateHertz  int32    `json:"smapleRateHertz,omitempty"`
+	AudioEncoding    string  `json:"audioEncoding"`
+	SpeakingRate     float64 `json:"speakingRate"`
+	Pitch            float64 `json:"pitch"`
+	VolumeGainDb     float64 `json:"volumeGainDb"`
+	EffectsProfileId string  `json:"effectsProfileId"`
+	SampleRateHertz  int64   `json:"sampleRateHertz,omitempty"`
 }
 
 type AdvanceConfModel struct {

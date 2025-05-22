@@ -3,6 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	effectprofileid "gctts/effect_profile_id"
+	"gctts/models"
+	"gctts/text"
+	util_help "gctts/utils/help"
+	util_openxml "gctts/utils/open_xml"
+	"os"
+	"strconv"
 )
 
 var (
@@ -11,6 +18,7 @@ var (
 	ListHz       bool
 	ListLC       bool
 	ListLCName   bool
+	Help         bool
 
 	// text regular
 	//
@@ -57,6 +65,10 @@ var (
 )
 
 const (
+	HelpUsage = "-h"
+	HelpName  = "help"
+	HelpShort = "h"
+
 	ListEfectUsage  = "-list-effect / -lef \n-- it will show list of effects profile id"
 	ListEffectName  = "list-effect"
 	ListEffectShort = "lef"
@@ -87,7 +99,7 @@ const (
 	SSMLShort = "ssml"
 
 	// [*] low latency
-	LTUsage = "-lt false / -lt true \n"
+	LTUsage = "-lt  \nif u use the flag, this mean lowlatency is true"
 	LTName  = "low-latency"
 	LTShort = "lt"
 
@@ -132,6 +144,9 @@ const (
 
 func TTSConfig() {
 	// [*] show helping
+	flag.BoolVar(&Help, HelpName, false, HelpUsage)
+	flag.BoolVar(&Help, HelpShort, false, HelpUsage)
+
 	flag.BoolVar(&ListEncoding, ListEncodingName, false, ListEncodingUsage)
 	flag.BoolVar(&ListEncoding, ListEncodingShort, false, ListEncodingUsage)
 
@@ -151,6 +166,9 @@ func TTSConfig() {
 	flag.StringVar(&Text, TextShort, "", TextUsage)
 
 	flag.StringVar(&SSML, SSMLName, "", SSMLUsage)
+
+	flag.BoolVar(&LowLatency, LTName, false, LTUsage)
+	flag.BoolVar(&LowLatency, LTShort, false, LTUsage)
 
 	// [*] audio config
 	flag.StringVar(&ACAudioEncoding, ACAudioEncodingName, "MP3", ACAudioEncodingUsage)
@@ -185,15 +203,39 @@ func TTSConfig() {
 
 	if flag.NFlag() == 0 {
 		fmt.Print(`example usage:
-[*] gtts -t "hello there, this is google text to speech" -ace "MP3"
-[*] gtts -ssml "<speak>hello there, this is google text to speech</speak>"
-[*] gtts -ssml file_ssml.xml
-`)
+		[*] gtts -t "hello there, this is google text to speech" -ace "MP3"
+		[*] gtts -ssml "<speak>hello there, this is google text to speech</speak>"
+		[*] gtts -ssml file_ssml.xml
+		`)
 
 	}
 }
 
 func main() {
+	TTSConfig()
+
+	if flag.NFlag() == 0 {
+		flag.PrintDefaults()
+		return
+	} else if Help {
+		flag.PrintDefaults()
+		return
+	} else if ListEffect {
+		util_help.HelpListEffect()
+		return
+	} else if ListEncoding {
+		util_help.HelpListEncoding()
+		return
+	} else if ListHz {
+		util_help.HelpListHz()
+		return
+	} else if ListLCName {
+		util_help.HelpListLanguageCodeName()
+		return
+	} else if ListLC {
+		util_help.HelpListLanguageCode()
+		return
+	}
 	//  default
 	// text.Synthesize(
 	// models.SynthesizeInputModel{Text: "hi, there. my name is afrizal"},
@@ -202,9 +244,54 @@ func main() {
 	// false,
 	// )
 	// util_help.HelpListLanguageCode()
-	TTSConfig()
-	flag.VisitAll(func(f *flag.Flag) {
-		fmt.Println(f.Name, "", f.Value)
-	})
+
+	// [*] set input text/ssml
+
+	input := models.SynthesizeInputModel{}
+	if flag.Lookup("text").Value.String() == "" {
+		ssmlInput := flag.Lookup("ssml")
+		{
+			// check file xml
+			_, err := os.Stat(ssmlInput.Value.String())
+			if notExist := os.IsNotExist(err); notExist {
+				fmt.Println("no exist")
+				input.SSML = ssmlInput.Value.String()
+			} else {
+				xmlString := util_openxml.ReadXML()
+				input.SSML = xmlString
+			}
+		}
+	} else {
+		input.Text = flag.Lookup("t").Value.String()
+	}
+
+	// [*] set voice model
+	voiceBody := text.DefaultVoiceBody()
+	voiceBody.LanguageCode = flag.Lookup("vmlc").Value.String()
+	voiceBody.Name = flag.Lookup("vmn").Value.String()
+	voiceBody.SSMLGender = flag.Lookup("vmg").Value.String()
+
+	//  [*] set audio config
+	audioConf := text.DefaultAudioConf()
+	audioConf.AudioEncoding = flag.Lookup("ace").Value.String()
+
+	// eff, _ := strconv.Atoi(flag.Lookup("aceff").Value.String())
+	audioConf.EffectsProfileId = effectprofileid.EffectAudio.AudioProfile[ACEffectsProfileId]
+
+	pitch, _ := strconv.ParseFloat(flag.Lookup("acp").Value.String(), 64)
+	audioConf.Pitch = pitch
+
+	hertz, _ := strconv.ParseInt(flag.Lookup("achz").Value.String(), 10, 64)
+	audioConf.SampleRateHertz = hertz
+
+	speakingRate, _ := strconv.ParseFloat(flag.Lookup("acsr").Value.String(), 64)
+	audioConf.SpeakingRate = speakingRate
+
+	volGain, _ := strconv.ParseFloat(flag.Lookup("acvg").Value.String(), 64)
+	audioConf.VolumeGainDb = volGain
+
+	// [*] low latency
+
+	text.Synthesize(input, voiceBody, audioConf, LowLatency)
 
 }
