@@ -213,29 +213,29 @@ func TTSConfig() {
 }
 
 func main() {
+	var helper = map[string]func(){
+		"help":          flag.PrintDefaults,
+		"list-lc":       util_help.HelpListLanguageCode,
+		"list-lc-name":  util_help.HelpListLanguageCodeName,
+		"list-effect":   util_help.HelpListEffect,
+		"list-encoding": util_help.HelpListEncoding,
+		"list-hz":       util_help.HelpListHz,
+	}
+
 	TTSConfig()
 
 	if flag.NFlag() == 0 {
 		flag.PrintDefaults()
 		return
-	} else if Help {
-		flag.PrintDefaults()
-		return
-	} else if ListEffect {
-		util_help.HelpListEffect()
-		return
-	} else if ListEncoding {
-		util_help.HelpListEncoding()
-		return
-	} else if ListHz {
-		util_help.HelpListHz()
-		return
-	} else if ListLCName {
-		util_help.HelpListLanguageCodeName()
-		return
-	} else if ListLC {
-		util_help.HelpListLanguageCode()
-		return
+	} else {
+		flag.VisitAll(func(f *flag.Flag) {
+			if fn, ok := helper[f.Name]; ok {
+				if f.Value.String() == "true" {
+					fn()
+					os.Exit(0)
+				}
+			}
+		})
 	}
 	//  default
 	// text.Synthesize(

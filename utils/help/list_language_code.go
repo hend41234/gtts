@@ -6,6 +6,7 @@ import (
 )
 
 func HelpListLanguageCode() {
+	fmt.Println("list language code :")
 	unique := []string{}
 	voices := voices.ListVoices
 	for _, l := range voices.Voice {
