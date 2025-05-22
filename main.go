@@ -7,6 +7,7 @@ import (
 	"gctts/models"
 	"gctts/text"
 	util_help "gctts/utils/help"
+	util_opentxt "gctts/utils/open_txt"
 	util_openxml "gctts/utils/open_xml"
 	"os"
 	"strconv"
@@ -249,22 +250,37 @@ func main() {
 
 	input := models.SynthesizeInputModel{}
 	if flag.Lookup("text").Value.String() == "" {
+		//  setting when input is ssml
 		ssmlInput := flag.Lookup("ssml")
 		{
 			// check file xml
 			_, err := os.Stat(ssmlInput.Value.String())
 			if notExist := os.IsNotExist(err); notExist {
-				fmt.Println("no exist")
 				input.SSML = ssmlInput.Value.String()
+				// return
 			} else {
 				xmlString := util_openxml.ReadXML()
 				input.SSML = xmlString
+				// return
 			}
 		}
 	} else {
-		input.Text = flag.Lookup("t").Value.String()
-	}
+		// setting when input is text
+		textInput := flag.Lookup("t")
+		{
+			_, err := os.Stat(textInput.Value.String())
+			if os.IsNotExist(err) {
+				input.Text = textInput.Value.String()
+				// return
+			} else {
+				readTxt := util_opentxt.ReadTXT(textInput.Value.String())
+				input.Text = readTxt
+				// return
 
+			}
+		}
+	}
+	// return
 	// [*] set voice model
 	voiceBody := text.DefaultVoiceBody()
 	voiceBody.LanguageCode = flag.Lookup("vmlc").Value.String()
