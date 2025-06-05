@@ -9,11 +9,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hend41234/gctts/models"
-	"github.com/hend41234/gctts/utilstts"
-	utilopentxt "github.com/hend41234/gctts/utilstts/opentxt"
-	utilopenxml "github.com/hend41234/gctts/utilstts/openxml"
-	"github.com/hend41234/gctts/voices"
+	"github.com/hend41234/gtts/models"
+	"github.com/hend41234/gtts/utilstts"
+	utilopentxt "github.com/hend41234/gtts/utilstts/opentxt"
+	utilopenxml "github.com/hend41234/gtts/utilstts/openxml"
+	"github.com/hend41234/gtts/voices"
 )
 
 var Config *models.TextBaseModel

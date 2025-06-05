@@ -6,12 +6,12 @@ import (
 	"os"
 	"strconv"
 
-	effectprofileid "github.com/hend41234/gctts/effectprofileid"
-	"github.com/hend41234/gctts/models"
-	"github.com/hend41234/gctts/text"
-	utilhelp "github.com/hend41234/gctts/utilstts/help"
-	utilopentxt "github.com/hend41234/gctts/utilstts/opentxt"
-	utilopenxml "github.com/hend41234/gctts/utilstts/openxml"
+	effectprofileid "github.com/hend41234/gtts/effectprofileid"
+	"github.com/hend41234/gtts/models"
+	"github.com/hend41234/gtts/text"
+	utilhelp "github.com/hend41234/gtts/utilstts/help"
+	utilopentxt "github.com/hend41234/gtts/utilstts/opentxt"
+	utilopenxml "github.com/hend41234/gtts/utilstts/openxml"
 )
 
 var (

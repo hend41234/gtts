@@ -3,7 +3,7 @@ package utilhelp
 import (
 	"fmt"
 
-	effectprofileid "github.com/hend41234/gctts/effectprofileid"
+	effectprofileid "github.com/hend41234/gtts/effectprofileid"
 )
 
 func HelpListEffect() {

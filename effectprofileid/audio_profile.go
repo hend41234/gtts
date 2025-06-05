@@ -2,7 +2,7 @@ package effectprofileid
 
 import (
 	"encoding/json"
-	"github.com/hend41234/gctts/models"
+	"github.com/hend41234/gtts/models"
 	"os"
 )
 

@@ -9,8 +9,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/hend41234/gctts/models"
-	"github.com/hend41234/gctts/utilstts"
+	"github.com/hend41234/gtts/models"
+	"github.com/hend41234/gtts/utilstts"
 )
 
 var ListVoices *models.ListVoicesModel

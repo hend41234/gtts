@@ -3,9 +3,9 @@ package generatetts
 import (
 	"fmt"
 
-	"github.com/hend41234/gctts/models"
-	"github.com/hend41234/gctts/text"
-	"github.com/hend41234/gctts/voices"
+	"github.com/hend41234/gtts/models"
+	"github.com/hend41234/gtts/text"
+	"github.com/hend41234/gtts/voices"
 )
 
 func GenerateDefaultConfig(nameVoices ...string) error {
