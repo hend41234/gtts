@@ -3,14 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	effectprofileid "gctts/effect_profile_id"
-	"gctts/models"
-	"gctts/text"
-	util_help "gctts/utils/help"
-	util_opentxt "gctts/utils/open_txt"
-	util_openxml "gctts/utils/open_xml"
 	"os"
 	"strconv"
+
+	effectprofileid "github.com/hend41234/gctts/effectprofileid"
+	"github.com/hend41234/gctts/models"
+	"github.com/hend41234/gctts/text"
+	utilhelp "github.com/hend41234/gctts/utilstts/help"
+	utilopentxt "github.com/hend41234/gctts/utilstts/opentxt"
+	utilopenxml "github.com/hend41234/gctts/utilstts/openxml"
 )
 
 var (
@@ -212,14 +213,14 @@ func TTSConfig() {
 	}
 }
 
-func main() {
+func CLI() {
 	var helper = map[string]func(){
 		"help":          flag.PrintDefaults,
-		"list-lc":       util_help.HelpListLanguageCode,
-		"list-lc-name":  util_help.HelpListLanguageCodeName,
-		"list-effect":   util_help.HelpListEffect,
-		"list-encoding": util_help.HelpListEncoding,
-		"list-hz":       util_help.HelpListHz,
+		"list-lc":       utilhelp.HelpListLanguageCode,
+		"list-lc-name":  utilhelp.HelpListLanguageCodeName,
+		"list-effect":   utilhelp.HelpListEffect,
+		"list-encoding": utilhelp.HelpListEncoding,
+		"list-hz":       utilhelp.HelpListHz,
 	}
 
 	TTSConfig()
@@ -237,6 +238,7 @@ func main() {
 			}
 		})
 	}
+
 	//  default
 	// text.Synthesize(
 	// models.SynthesizeInputModel{Text: "hi, there. my name is afrizal"},
@@ -259,7 +261,7 @@ func main() {
 				input.SSML = ssmlInput.Value.String()
 				// return
 			} else {
-				xmlString := util_openxml.ReadXML()
+				xmlString := utilopenxml.ReadXML(ssmlInput.Value.String())
 				input.SSML = xmlString
 				// return
 			}
@@ -273,13 +275,14 @@ func main() {
 				input.Text = textInput.Value.String()
 				// return
 			} else {
-				readTxt := util_opentxt.ReadTXT(textInput.Value.String())
+				readTxt := utilopentxt.ReadTXT(textInput.Value.String())
 				input.Text = readTxt
 				// return
 
 			}
 		}
 	}
+
 	// return
 	// [*] set voice model
 	voiceBody := text.DefaultVoiceBody()
@@ -309,5 +312,21 @@ func main() {
 	// [*] low latency
 
 	text.Synthesize(input, voiceBody, audioConf, LowLatency)
+
+}
+
+func main() {
+	// using CLI
+	// CLI()
+
+	// using library
+	// name := "ur-IN-Chirp3-HD-Vindemiatrix"
+	// if newConfErr := generatetts.GenerateDefaultConfig(name); newConfErr != nil {
+	// log.Println(newConfErr)
+	// }
+	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "hai! nama gua bandol. lu tau ngga, gua hobi banget sama mancing, hampir tiap hari gua mancing di kali."}
+	// generatetts.RunGenerateTTS()
+	// audioBuff, _ := base64.StdEncoding.DecodeString(m.AudioContent)
+	// generatetts.SaveAudio("output/bandol", string(audioBuff))
 
 }

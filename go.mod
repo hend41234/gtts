@@ -1,4 +1,4 @@
-module gctts
+module github.com/hend41234/gctts
 
 go 1.23.0
 

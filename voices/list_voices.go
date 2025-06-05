@@ -3,13 +3,14 @@ package voices
 import (
 	"encoding/json"
 	"fmt"
-	"gctts/models"
-	"gctts/utils"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/hend41234/gctts/models"
+	"github.com/hend41234/gctts/utilstts"
 )
 
 var ListVoices *models.ListVoicesModel
@@ -21,7 +22,6 @@ func init() {
 	ListVoices = new(models.ListVoicesModel)
 	if _, err := os.Stat("data/list_voices.json"); os.IsNotExist(err) {
 		GetListVoices()
-
 	}
 	file, _ := os.Open("data/list_voices.json")
 	defer file.Close()
@@ -34,7 +34,7 @@ func init() {
 
 func GetListVoices() {
 	endpoint := "/v1/voices"
-	url := fmt.Sprintf("%v%v?key=%v", utils.Utils.BaseURL, endpoint, utils.Utils.API_KEY)
+	url := fmt.Sprintf("%v%v?key=%v", utilstts.Utils.BaseURL, endpoint, utilstts.Utils.API_KEY)
 	req, _ := http.NewRequest("GET", url, nil)
 	client := http.Client{}
 	resp, err := client.Do(req)

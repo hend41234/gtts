@@ -1,8 +1,9 @@
-package util_help
+package utilhelp
 
 import (
 	"fmt"
-	"gctts/voices"
+
+	"github.com/hend41234/gctts/voices"
 )
 
 func HelpListLanguageCode() {

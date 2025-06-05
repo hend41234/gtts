@@ -1,8 +1,9 @@
-package util_help
+package utilhelp
 
 import (
 	"fmt"
-	effectprofileid "gctts/effect_profile_id"
+
+	effectprofileid "github.com/hend41234/gctts/effectprofileid"
 )
 
 func HelpListEffect() {

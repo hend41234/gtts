@@ -35,3 +35,7 @@ type TextBaseModel struct {
 
 	// AdvancedVoiceOptions string
 }
+
+type ResSynthesize struct {
+	AudioContent string `json:"audioContent"`
+}

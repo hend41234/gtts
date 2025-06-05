@@ -1,4 +1,4 @@
-package util_opentxt
+package utilopentxt
 
 import (
 	"io"
@@ -11,4 +11,10 @@ func ReadTXT(fileName string) (result string) {
 	readText, _ := io.ReadAll(fileTXT)
 	result = string(readText)
 	return
+}
+
+func CheckTXTFile(fileName string) bool {
+	_, err := os.Stat(fileName)
+	return os.IsExist(err)
+
 }

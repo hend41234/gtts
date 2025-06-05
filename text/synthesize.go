@@ -5,14 +5,15 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"gctts/models"
-	"gctts/utils"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/hend41234/gctts/models"
+	"github.com/hend41234/gctts/utilstts"
 )
 
 // <break time="300ms"/>
@@ -115,18 +116,20 @@ func DefaultVoiceBody() (defaultConfig models.VoiceSelectionParamsModel) {
 }
 func DefaultAudioConf() models.AudioConfigModel {
 	return models.AudioConfigModel{
-		AudioEncoding: "MP3",
-		SpeakingRate:  1.0,
-		Pitch:         0.0,
-		VolumeGainDb:  0.0,
-		// SampleRateHertz: 24000,
+		AudioEncoding:   "MP3",
+		SpeakingRate:    1.0,
+		Pitch:           0.0,
+		VolumeGainDb:    0.0,
+		SampleRateHertz: 24000,
 	}
 }
 
+var DefaultLowLatency = false
+
 func Synthesize(inputBody models.SynthesizeInputModel, voiceBody models.VoiceSelectionParamsModel, audioConf models.AudioConfigModel, lowLtency bool) {
 	endpoint := "/v1/text:synthesize"
-	url := fmt.Sprintf("%v%v?key=%v", utils.Utils.BaseURL, endpoint, utils.Utils.API_KEY)
-
+	url := fmt.Sprintf("%v%v?key=%v", utilstts.Utils.BaseURL, endpoint, utilstts.Utils.API_KEY)
+		
 	// voiceBody := models.VoiceSelectionParamsModel{
 	// LanguageCode: "en-US",
 	// Name:         "en-US-Neural2-J",
