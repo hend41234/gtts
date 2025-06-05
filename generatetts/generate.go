@@ -18,12 +18,24 @@ import (
 
 var Config *models.TextBaseModel
 var NewAudio *models.ResSynthesize
+var ApiKey *string
 
-func RunGenerateTTS() {
+func RunGenerateTTS(apiKey ...string) {
+	var key string
+	if len(apiKey) > 0 {
+		key = apiKey[0]
+	} else {
+		if utilstts.Utils == nil {
+			log.Fatal("API_KEY not found\nplease set :\n\tutilstts.LoadConf('envFile')")
+		}
+	}
+	key = utilstts.Utils.API_KEY
+
 	if Config.Input.Text != "" {
 		if utilopentxt.CheckTXTFile(Config.Input.Text) {
 			openText := utilopentxt.ReadTXT(Config.Input.Text)
 			Config.Input.Text = openText
+			fmt.Println(Config.Input.Text)
 		}
 	}
 
@@ -37,9 +49,8 @@ func RunGenerateTTS() {
 			Config.Input.SSML = openXml
 		}
 	}
-
 	endpoint := "/v1/text:synthesize"
-	url := fmt.Sprintf("%v%v?key=%v", utilstts.Utils.BaseURL, endpoint, utilstts.Utils.API_KEY)
+	url := fmt.Sprintf("%v%v?key=%v", utilstts.Utils.BaseURL, endpoint, key)
 
 	body, err := json.Marshal(Config)
 	if err != nil {

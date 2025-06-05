@@ -19,5 +19,5 @@ func ReadXML(filename string) (result string) {
 
 func CheckXMLFile(fileName string) bool {
 	_, err := os.Stat(fileName)
-	return os.IsExist(err)
+	return !os.IsExist(err)
 }

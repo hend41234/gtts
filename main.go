@@ -320,13 +320,13 @@ func main() {
 	CLI()
 
 	// using library
+	// utilstts.LoadEnv(".env")
 	// name := "ur-IN-Chirp3-HD-Vindemiatrix"
 	// if newConfErr := generatetts.GenerateDefaultConfig(name); newConfErr != nil {
 	// log.Println(newConfErr)
 	// }
-	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "hai! nama gua bandol. lu tau ngga, gua hobi banget sama mancing, hampir tiap hari gua mancing di kali."}
+	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "sample.txt"}
 	// generatetts.RunGenerateTTS()
-	// audioBuff, _ := base64.StdEncoding.DecodeString(m.AudioContent)
-	// generatetts.SaveAudio("output/bandol", string(audioBuff))
-
+	// audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
+	// generatetts.SaveAudio("output/testing_123", string(audioBuff))
 }

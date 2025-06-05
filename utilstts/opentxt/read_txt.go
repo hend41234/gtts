@@ -15,6 +15,5 @@ func ReadTXT(fileName string) (result string) {
 
 func CheckTXTFile(fileName string) bool {
 	_, err := os.Stat(fileName)
-	return os.IsExist(err)
-
+	return !os.IsExist(err)
 }
