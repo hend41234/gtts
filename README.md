@@ -42,6 +42,10 @@
 if you want latency is ON / true. the voice model `can only use Chirp3`. like `example 5`.
 
 ## Using in your code
+* ## install
+    ```bash
+        go get "github.com/hend42134/gtts"
+    ```
 * ## generate Text-to-Speech according with name voice
     To create a voice easily and according to the name of the voice, we can use the code as below
 
