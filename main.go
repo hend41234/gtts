@@ -317,7 +317,7 @@ func CLI() {
 
 func main() {
 	// using CLI
-	// CLI()
+	CLI()
 
 	// using library
 	// name := "ur-IN-Chirp3-HD-Vindemiatrix"
