@@ -66,7 +66,7 @@ if you want latency is ON / true. the voice model `can only use Chirp3`. like `e
 	    generatetts.RunGenerateTTS()
 
         // because response from server is base64 encoding, we must convert the response to buffer string
-	    audioBuff, _ := base64.StdEncoding.DecodeString(m.AudioContent)
+	    audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
 
         // save audio using audioBuff, that we have prepared
 	    generatetts.SaveAudio("output/bandol", string(audioBuff))
