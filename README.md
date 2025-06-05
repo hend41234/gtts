@@ -1,4 +1,4 @@
-# Google Cloud Text-To-Speech
+# Google Cloud Text-To-Speech for Golang CLI and Module
 
 ## Using CLI
 * create the .env fle
