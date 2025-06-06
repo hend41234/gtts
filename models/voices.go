@@ -7,6 +7,7 @@ type VoicesModel struct {
 	NaturalSampleRateHertz int      `json:"naturalSampleRateHertz"`
 }
 
+
 type ListVoicesModel struct {
 	Voice []VoicesModel `json:"voices"`
 }

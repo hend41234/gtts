@@ -1,6 +1,7 @@
 package main
 
 import (
+
 	"flag"
 	"fmt"
 	"os"
@@ -12,6 +13,7 @@ import (
 	utilhelp "github.com/hend41234/gtts/utilstts/help"
 	utilopentxt "github.com/hend41234/gtts/utilstts/opentxt"
 	utilopenxml "github.com/hend41234/gtts/utilstts/openxml"
+	"github.com/hend41234/gtts/voices"
 )
 
 var (
@@ -317,7 +319,7 @@ func CLI() {
 
 func main() {
 	// using CLI
-	CLI()
+	// CLI()
 
 	// using library
 	// utilstts.LoadEnv(".env")
@@ -329,4 +331,12 @@ func main() {
 	// generatetts.RunGenerateTTS()
 	// audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
 	// generatetts.SaveAudio("output/mytest", string(audioBuff))
+
+	tst()
+}
+
+func tst() {
+	for _, list := range voices.ListVoices.Voice {
+		fmt.Println(list)
+	}
 }

@@ -1,34 +1,44 @@
 package voices
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
-	"sync"
 
 	"github.com/hend41234/gtts/models"
 	"github.com/hend41234/gtts/utilstts"
 )
 
 var ListVoices *models.ListVoicesModel
-var wg = sync.WaitGroup{}
+
+// var wg = sync.WaitGroup{}
+
+//go:embed list_voices.json
+var voicesData []byte
 
 func init() {
-	wg.Add(1)
-	defer wg.Done()
+	// wg.Add(1)
+	// defer wg.Done()
+	// ListVoices = new(models.ListVoicesModel)
+	// if _, err := os.Stat("data/list_voices.json"); os.IsNotExist(err) {
+	// 	GetListVoices()
+	// }
+	// file, _ := os.Open("data/list_voices.json")
+	// defer file.Close()
+	// byteFile, _ := io.ReadAll(file)
+	// err := json.Unmarshal(byteFile, &ListVoices)
+	// if err != nil {
+	// 	log.Println("error load list_voices.json")
+	// }
+
 	ListVoices = new(models.ListVoicesModel)
-	if _, err := os.Stat("data/list_voices.json"); os.IsNotExist(err) {
-		GetListVoices()
-	}
-	file, _ := os.Open("data/list_voices.json")
-	defer file.Close()
-	byteFile, _ := io.ReadAll(file)
-	err := json.Unmarshal(byteFile, &ListVoices)
-	if err != nil {
-		log.Println("error load list_voices.json")
+	decodeErr := json.Unmarshal(voicesData, &ListVoices)
+	if decodeErr != nil {
+		log.Fatal("error loda list_voices.json")
 	}
 }
 
