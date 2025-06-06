@@ -1,0 +1,1 @@
+ go build -tags netgo  -buildvcs=false -o gtts_cli
