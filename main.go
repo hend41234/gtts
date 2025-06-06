@@ -328,5 +328,5 @@ func main() {
 	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "sample.txt"}
 	// generatetts.RunGenerateTTS()
 	// audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
-	// generatetts.SaveAudio("output/testing_123", string(audioBuff))
+	// generatetts.SaveAudio("output/mytest", string(audioBuff))
 }
