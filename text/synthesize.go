@@ -127,9 +127,10 @@ func DefaultAudioConf() models.AudioConfigModel {
 var DefaultLowLatency = false
 
 func Synthesize(inputBody models.SynthesizeInputModel, voiceBody models.VoiceSelectionParamsModel, audioConf models.AudioConfigModel, lowLtency bool) {
+	utilstts.LoadEnv(".env")
 	endpoint := "/v1/text:synthesize"
 	url := fmt.Sprintf("%v%v?key=%v", utilstts.Utils.BaseURL, endpoint, utilstts.Utils.API_KEY)
-		
+
 	// voiceBody := models.VoiceSelectionParamsModel{
 	// LanguageCode: "en-US",
 	// Name:         "en-US-Neural2-J",
@@ -152,7 +153,7 @@ func Synthesize(inputBody models.SynthesizeInputModel, voiceBody models.VoiceSel
 
 	{
 		byteBody, _ := json.Marshal(body)
-
+		fmt.Println(string(byteBody))
 		req, _ := http.NewRequest("POST", url, bytes.NewBuffer(byteBody))
 		client := http.Client{}
 		resp, err := client.Do(req)

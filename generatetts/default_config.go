@@ -9,6 +9,7 @@ import (
 )
 
 func GenerateDefaultConfig(nameVoices ...string) error {
+	Config = new(models.TextBaseModel)
 	// setting voice body
 	voiceBody := text.DefaultVoiceBody()
 	var naturalHertz int
@@ -35,7 +36,7 @@ func GenerateDefaultConfig(nameVoices ...string) error {
 	// setting audio config
 	audioConfig := text.DefaultAudioConf()
 	audioConfig.SampleRateHertz = int64(naturalHertz)
-
+	audioConfig.EffectsProfileId = "headphone-class-device"
 	lowLatency := text.DefaultLowLatency
 
 	// build config Base Models

@@ -1,19 +1,21 @@
 package main
 
 import (
-
+	"encoding/base64"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
 	effectprofileid "github.com/hend41234/gtts/effectprofileid"
+	"github.com/hend41234/gtts/generatetts"
 	"github.com/hend41234/gtts/models"
 	"github.com/hend41234/gtts/text"
+	"github.com/hend41234/gtts/utilstts"
 	utilhelp "github.com/hend41234/gtts/utilstts/help"
 	utilopentxt "github.com/hend41234/gtts/utilstts/opentxt"
 	utilopenxml "github.com/hend41234/gtts/utilstts/openxml"
-	"github.com/hend41234/gtts/voices"
 )
 
 var (
@@ -314,29 +316,60 @@ func CLI() {
 	// [*] low latency
 
 	text.Synthesize(input, voiceBody, audioConf, LowLatency)
-
 }
 
 func main() {
+	lib()
+}
+func lib() {
 	// using CLI
 	// CLI()
 
 	// using library
-	// utilstts.LoadEnv(".env")
-	// name := "ur-IN-Chirp3-HD-Vindemiatrix"
-	// if newConfErr := generatetts.GenerateDefaultConfig(name); newConfErr != nil {
-	// log.Println(newConfErr)
-	// }
-	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "sample.txt"}
-	// generatetts.RunGenerateTTS()
-	// audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
-	// generatetts.SaveAudio("output/mytest", string(audioBuff))
-
-	tst()
-}
-
-func tst() {
-	for _, list := range voices.ListVoices.Voice {
-		fmt.Println(list)
+	utilstts.LoadEnv(".env")
+	name := "en-US-Chirp-HD-D"
+	// ssml := `<speak>hi there, my name is afrizal</speak>`
+	txt := `And Aubrey was her name
+	A not so very ordinary girl or name
+	But who's to blame
+	For a love that wouldn't bloom?
+	For the hearts that never played in tune?
+	Like a lovely melody that everyone can sing
+	Take away the words that rhyme, it doesn't mean a thing
+	And Aubrey was her name
+	We tripped the light and danced together to the moon
+	But where was June?
+	No, it never came around
+	If it did, it never made a sound
+	Maybe I was absent or was listening too fast?
+	Catching all the words, but then the meaning going past
+	But God, I miss the girl
+	And I'd go a thousand times around the world
+	Just to be closer to her than to me
+	And Aubrey was her name
+	I never knew her, but I loved her just the same
+	I loved her name
+	Wish that I had found the way
+	And the reasons that would make her stay
+	I have learned to lead a life apart from all the rest
+	If I can't have the one I want, I'll do without the best
+	But how I miss the girl
+	And I'd go a million times around the world just to say
+	She had been mine for a day`
+	if newConfErr := generatetts.GenerateDefaultConfig(name); newConfErr != nil {
+		log.Fatal(newConfErr)
 	}
+
+	// generatetts.Config.Input = models.SynthesizeInputModel{Text: "sample.txt"}
+	generatetts.Config.Input = models.SynthesizeInputModel{Text: txt}
+	generatetts.Config.AudioConfig.SampleRateHertz = 8000
+	// generatetts.Config.AudioConfig.Pitch = -50.0
+	generatetts.Config.AudioConfig.SpeakingRate = 0.8
+	// generatetts.Config.AudioConfig.VolumeGainDb = -50.0
+	generatetts.Config.LowLatencyJourneySynthesis = models.AdvanceConfModel{LowLatencyJourneySynthesis: true}
+	// fmt.Println(generatetts.Config.Input.Text)
+	generatetts.Config.AudioConfig.EffectsProfileId = "headphone-class-device"
+	generatetts.RunGenerateTTS()
+	audioBuff, _ := base64.StdEncoding.DecodeString(generatetts.NewAudio.AudioContent)
+	generatetts.SaveAudio("output/aubrey", string(audioBuff))
 }

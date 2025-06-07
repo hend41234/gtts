@@ -39,3 +39,11 @@ type TextBaseModel struct {
 type ResSynthesize struct {
 	AudioContent string `json:"audioContent"`
 }
+
+type ResError struct {
+	Error struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+		Status  string `json:"status"`
+	} `json:"error"`
+}
