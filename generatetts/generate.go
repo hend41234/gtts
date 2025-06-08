@@ -123,7 +123,7 @@ func SaveAudio(nameFile string, audioBuffer string, ext ...string) bool {
 	} else {
 		nameFile = fmt.Sprintf("%v.%v", nameFile, strings.ToLower(Config.AudioConfig.AudioEncoding))
 	}
-	if dir := filepath.Dir(nameFile); utilopentxt.CheckTXTFile(dir) {
+	if dir := filepath.Dir(nameFile); !utilopentxt.CheckTXTFile(dir) {
 		// fmt.Println("ada")
 		err := os.Mkdir(dir, 0755)
 		if err != nil {
