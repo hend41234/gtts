@@ -56,7 +56,7 @@ func RunGenerateTTS(apiKey ...string) {
 			//  print the content
 			fmt.Println(Config.Input.Text)
 		}
-		fmt.Println(Config.Input)
+		// fmt.Println(Config.Input)
 	}
 
 	if Config.Input.SSML != "" {
@@ -65,7 +65,7 @@ func RunGenerateTTS(apiKey ...string) {
 		}
 		// fmt.Println(Config.LowLatencyJourneySynthesis.LowLatencyJourneySynthesis)
 		if !utilopenxml.CheckXMLFile(Config.Input.SSML) {
-			fmt.Println("ssml ada")
+			// fmt.Println("ssml ada")
 			openXml := utilopenxml.ReadXML(Config.Input.SSML)
 			Config.Input.SSML = openXml
 			fmt.Println(Config.Input.SSML)
@@ -88,9 +88,6 @@ func RunGenerateTTS(apiKey ...string) {
 	// }
 
 	body, _ := json.Marshal(Config)
-	{
-		fmt.Println(string(body))
-	}
 
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	client := http.Client{}
