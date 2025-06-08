@@ -28,7 +28,7 @@ func LoadEnv(envFile string) {
 	for {
 		envErr := godotenv.Load(envFile)
 		if envErr != nil {
-			log.Fatal("API_KEY not found, or env file nor found")
+			log.Fatal("GC_API_KEY not found, or env file nor found")
 			// time.Sleep(2 * time.Second)
 			continue
 		}
@@ -52,6 +52,6 @@ func init() {
 		Utils.API_KEY = gcApiKey
 	}
 	Utils.BaseURL = "https://texttospeech.googleapis.com"
-	return
+	// return
 
 }
