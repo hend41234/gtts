@@ -1,7 +1,6 @@
 package utilstts
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -45,7 +44,6 @@ func LoadEnv(envFile string) {
 func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		fmt.Println(".env loaded")
 		return
 	}
 	Utils = new(UtilizationModel)
